@@ -41,7 +41,7 @@ app.use(function(err, req, res, next) {
 
 var admin = require("firebase-admin");
 
-var serviceAccount = require("privatekey.json");
+var serviceAccount = require("./privatekey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
