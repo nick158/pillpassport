@@ -23,18 +23,15 @@ app.use(bodyParser.json({
 	limit : config.bodyLimit
 }));
 
-// connect to db
-initializeDb( db => {
 
-	// internal middleware
-	app.use(middleware({ config, db }));
+var admin = require("firebase-admin");
 
-	// api router
-	app.use('/api', api({ config, db }));
+var serviceAccount = require("privatekey.json");
 
-	app.server.listen(process.env.PORT || config.port, () => {
-		console.log(`Started on port ${app.server.address().port}`);
-	});
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://htn2018-a0566.firebaseio.com"
 });
+
 
 export default app;
