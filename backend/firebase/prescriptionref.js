@@ -33,10 +33,10 @@ class Prescription {
 //dose should have drug and date
   static addDose(doseObj){
     if(!doseObj.drug || !doseObj.prescriptionId){
-      console.log("You to send a dose obj with a drug, id, and a date property ")
+      console.log("You need to send all params ")
     }
-    if(!doseObj.date){
-      doseObj.date = Date.now()
+    if(!doseObj.startDate){
+      doseObj.startDate = Date.now()
     }
     var prescriptionId = doseObj.prescriptionId
     return admin.database().ref('prescriptions/' + prescriptionId).once('value').then(function(snapshot){
