@@ -75,7 +75,7 @@ class Prescription {
         x[key] = childData
       }
       });
-      return x
+      return JSON.stringify(x)
 
     }
     )
