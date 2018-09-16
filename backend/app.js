@@ -3,10 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser')
 
 //route step 1
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var prescriptionRouter = require('./routes/prescription')
+var doctorsRouter = require('./routes/doctors')
 
 var app = express();
 
@@ -15,6 +18,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -23,6 +30,8 @@ app.use(cookieParser());
 //route step 2
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/prescription', prescriptionRouter)
+app.use('/doctors', doctorsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -38,16 +47,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-
-var admin = require("firebase-admin");
-
-var serviceAccount = require("./privatekey.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://htn2018-a0566.firebaseio.com"
 });
 
 
