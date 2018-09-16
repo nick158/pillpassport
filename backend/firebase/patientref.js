@@ -1,27 +1,27 @@
 const {admin} = require('../firebaseConfig.js');
 const {log} = require('./log.js');
 class Patient {
-
-  static createPatient(userId, name, email) {
-    console.log(userId);
-    console.log(name);
-    admin.database().ref('patients/' + userId).set({
+//need userId, name, email, dob fields
+  static createPatient(userId, name, email, dob, sex) {
+    return admin.database().ref('patients/' + userId).set({
       name: name,
       email: email,
+      dob: dob,
+      sex: sex,
       prescription : [""],
       doctors: [""]
     }, log);
 
   }
-
-  static addPrescription(pId, prescObj){
+//takes the patient id and then takes the presId
+  static addPrescription(pId, presId){
     return admin.database().ref('patients/'+pId).once('value').then(function(snapshot){
       if (!snapshot.exists()){
         console.log("Does not exist")
         return false;
       }
-      console.log(snapshot.val())
-      return admin.database().ref('patients/'+pId + '/prescription').push(prescObj);
+      var newPrescId = Object.keys(snapshot.val()).length
+      return admin.database().ref('patients/'+pId + '/prescription').push(presId);
     }, log)
   }
 

@@ -8,6 +8,7 @@ var bodyParser = require('body-parser')
 //route step 1
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var prescriptionRouter = require('./routes/prescription')
 
 var app = express();
 
@@ -19,7 +20,7 @@ app.use(logger('dev'));
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -28,6 +29,7 @@ app.use(cookieParser());
 //route step 2
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/prescription', prescriptionRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
