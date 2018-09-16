@@ -13,8 +13,8 @@ router.post('/create', function(req, res, next) {
 });
 //needs a drug, date, prescriptionid to add dose
 router.post('/adddose', function(req,res,next){
-  if(!req.body.drug || ! req.body.date || !req.body.prescriptionId){
-    res.status(404).send({error: "You to send a dose obj with a drug, id, and a date property"})
+  if(!req.body.drugName || ! req.body.drugClass || !req.body.prescriptionId || !req.body.frequency || !req.body.startDate || !req.body.endDate || !req.body.dosagePrescribed || !req.body.dosagesTaken || !req.body.withFood){
+    res.status(404).send({error: "You need to send all params"})
   }
   Prescription.addDose(req.body).then((data) => res.send(data))
 })
