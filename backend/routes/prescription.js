@@ -23,4 +23,13 @@ router.get('/:id', function(req, res, next){
   Prescription.getPrescription(req.params.id).then((data) => res.send(data));
 })
 
+//just takes an patient and find only there prescriptions
+router.post('/individual', function(req, res, next){
+  var id = req.body.patientId
+  Prescription.getIndividual(id).then(function(value){
+    res.send(value);
+  })
+})
+
+
 module.exports = router;

@@ -57,5 +57,28 @@ class Prescription {
       return snapshot.val()
     })
   }
+
+  static getIndividual(id) {
+
+    return admin.database().ref('prescriptions/').once('value').then(function(snapshot){
+      var x = {}
+      snapshot.forEach(function(childSnapshot) {
+
+      // key will be "ada" the first time and "alan" the second time
+      var key = childSnapshot.key;
+      // childData will be the actual contents of the child
+      var childData = childSnapshot.val();
+      console.log(childData.patientId)
+      console.log(id)
+      if (childData.patientId == id){
+        console.log("found")
+        x[key] = childData
+      }
+      });
+      return x
+
+    }
+    )
+  }
 }
 module.exports = Prescription;
